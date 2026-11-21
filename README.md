@@ -32,6 +32,16 @@ We open sourced the SDKs and firmware here. It's built by hackers, for hackers,
 just for fun. Side effects of tinkering may include bricked boards, voided
 warranties, brownouts, or bankruptcies. Proceed at your own risk!
 
+## About this fork
+
+This fork adds one feature to the SDK: a **signal button** for ESP32
+gadgets. Physical buttons post `[SIG]` messages to the chat, and the button
+set is delivered back to the device through the chat at boot — no reflash to
+add, remove or reassign buttons. Everything else is upstream, unchanged.
+
+See [SIGNAL.md](SIGNAL.md) for how it works, how to enable it, and the
+agent-side agreement it needs in order to do anything.
+
 | | |
 |---|---|
 | [**ESP32 Device SDK**](esp32) | Connect your ESP32 board to Muse through our open source SDK. Throw in a screen to show images, add audio in and out, or wire up other sensors. |
