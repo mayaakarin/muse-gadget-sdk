@@ -67,6 +67,7 @@
 #include "noise_tunnel.h"
 #include "led_status.h"
 #include "button.h"
+#include "muse_signal.h"
 #include "tunnel_netif.h"
 #include "net_discovery.h"
 #include "ota.h"
@@ -2062,6 +2063,11 @@ static cJSON *on_ws_command(
         if (!url) return command_error("missing_param", "url is required");
         return queue_ws_control(WS_CONTROL_SET_VM, url);
     }
+#if CONFIG_HOMEHUB_SIGNAL_BUTTON
+    if (strcmp(command, "device.signal") == 0) {
+        return muse_signal_last_json();
+    }
+#endif
 #if CONFIG_MUSE_WASM_APPS
     if (muse_apps_handles(command)) {
         return muse_apps_command(command, params, request_id, session_generation);
@@ -3050,6 +3056,9 @@ void app_run(void) {
                      on_button_long_press)) {
         ESP_LOGW(TAG, "button init failed — physical setup reset unavailable");
     }
+#endif
+#if CONFIG_HOMEHUB_SIGNAL_BUTTON
+    muse_signal_init();
 #endif
 #if CONFIG_HOMEHUB_WAVESHARE_154G_SHTC3
     // Before voice_init(): the voice task may use the same I2C bus.

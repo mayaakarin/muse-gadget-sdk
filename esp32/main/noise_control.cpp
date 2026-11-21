@@ -1689,6 +1689,17 @@ static char *build_register_json(void) {
         cJSON_GetObjectItem(commands, "camera.capture"), "timeout_ms", 30000);
 #endif
 
+#if CONFIG_HOMEHUB_SIGNAL_BUTTON
+    add_command(commands, "device.signal",
+                "Report the last signal this device sent. This device "
+                "sends signals on its own: a press of one of its signal "
+                "buttons posts the message \"[SIG] code=<code> "
+                "press=short seq=N\" to the chat as a message from this "
+                "device, N increasing with each signal. A signal asks "
+                "for the agent's pre-agreed action for that code.",
+                nullptr, nullptr);
+#endif
+
 #if CONFIG_HOMEHUB_BLE_COMMANDS
     ble_commands_register(commands);
 #endif

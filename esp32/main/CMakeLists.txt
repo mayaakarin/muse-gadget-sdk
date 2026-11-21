@@ -115,6 +115,10 @@ else()
     list(APPEND GADGET_SRCS "led_status.c")
 endif()
 
+if (CONFIG_HOMEHUB_SIGNAL_BUTTON)
+    list(APPEND GADGET_SRCS "muse_signal.c")
+endif()
+
 if(CONFIG_MUSE_ENABLED)
     list(APPEND GADGET_SRCS "muse_glue.c")
 endif()

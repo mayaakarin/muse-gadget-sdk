@@ -431,6 +431,29 @@ menu "ESP32 Device SDK"
             Board overlays override this when the physical button has
             its own name.
 
+    config HOMEHUB_SIGNAL_BUTTON
+        bool "Signal button (posts a [SIG] message to the chat)"
+        default n
+        help
+            A second, active-low button on its own GPIO. A press posts
+            one short signal message ("[SIG] code=BTN1 press=short
+            seq=N") to the chat over the Link session. The device
+            sends a code only; the action a signal asks for is agreed
+            on the agent side. The button set is not compiled in: at
+            boot the device asks through the chat (a CFGREQ signal)
+            and the agent answers with a [CFG] message that the
+            device reads back over GET /chat/history.
+
+    config HOMEHUB_SIGNAL_GPIO
+        int "Fallback signal button GPIO"
+        range 0 48
+        default 21
+        depends on HOMEHUB_SIGNAL_BUTTON
+        help
+            The single fallback button (code BTN1), used only when
+            the button config cannot be loaded via the chat. Uses an
+            internal pull-up and treats a low level as pressed.
+
     choice HOMEHUB_LED_BACKEND
         prompt "Status LED hardware"
         default HOMEHUB_LED_BACKEND_PWM_RGB
